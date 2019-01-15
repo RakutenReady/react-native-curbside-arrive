@@ -1,0 +1,16 @@
+PODS:
+  - Curbside (3.27)
+
+DEPENDENCIES:
+  - Curbside
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Curbside
+
+SPEC CHECKSUMS:
+  Curbside: b739f49735828da5b790a14c17cd38c7fc649432
+
+PODFILE CHECKSUM: 514b979d442d1e4b546b6b67842a1c85d86929ea
+
+COCOAPODS: 1.5.3

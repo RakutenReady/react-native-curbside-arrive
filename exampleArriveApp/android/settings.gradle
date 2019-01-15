@@ -1,0 +1,6 @@
+rootProject.name = 'exampleArriveApp'
+
+include ':app'
+
+include ':react-native-curbside-arrive'
+project(':react-native-curbside-arrive').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-curbside-arrive/android')
