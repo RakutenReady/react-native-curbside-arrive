@@ -31,6 +31,7 @@ DerivedData
 *.dSYM
 *.xcuserstate
 project.xcworkspace
+ios/RNCurbsideArrive.xcworkspace
       
 
 # Android/IntelliJ
