@@ -46,8 +46,9 @@ Follow all the 3 manual steps (https://facebook.github.io/react-native/docs/link
 2. Go to `node_modules` ➜ `react-native-curbside-arrive` and add `RNCurbsideArrive.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNCurbsideArrive.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)<
-5. <react-native-curbside-arrive> ios bridge needs Curbside framework to compile, please download via cocopods and add it to build path
-6. Add location permission request in the App also please follow the permission setting on ios quick guide on develolper.curbside.com
+5. <react-native-curbside-arrive> ios bridge needs Curbside framework to compile, please download via CocoaPods and add it to build path
+6. Install CocoaPods, add Curbside to your Podfile and run pod install ( refer exampleArriveApp/ios)  
+7. Add location permission request in the App also please follow the permission setting on ios quick guide on develolper.curbside.com
 
 - In `AppDelegate.m` add
 
@@ -66,6 +67,11 @@ Follow all the 3 manual steps (https://facebook.github.io/react-native/docs/link
   ```
 
 For quick reference of settings please refer to example app `$ react-native-curbside-arrive/exampleArriveApp/ios` -> `exampleArriveApp.xcworkspace `
+
+![screen shot 2019-01-15 at 4 19 44 pm](https://user-images.githubusercontent.com/20405204/51218521-ac5d1380-18e1-11e9-950d-c862379861ac.png)
+
+![screen shot 2019-01-15 at 4 20 26 pm](https://user-images.githubusercontent.com/20405204/51218528-b717a880-18e1-11e9-9847-3e340fcf55a0.png)
+
 
 
 #### Android
