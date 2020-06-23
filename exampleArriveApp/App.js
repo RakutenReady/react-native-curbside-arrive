@@ -1,100 +1,174 @@
 /**
- * PieTracker React Native App with Curbside SDK
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
  * @format
- * @flow
+ * @flow strict-local
  */
-
+ 
+'use strict';
 import React, {Component} from 'react';
-import {FlatList,Platform, StyleSheet, Text, SafeAreaView, View, TextInput, TouchableHighlight} from 'react-native';
-import { PermissionsAndroid } from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Linking,
+  Platform,
+  PermissionsAndroid,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  TextInput,
+  ToastAndroid,
+  TouchableHighlight,
+  StatusBar,
+} from 'react-native';
+
+import {
+  Header,
+  LearnMoreLinks,
+  Colors,
+  DebugInstructions,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
 import Button from './src/components/Button';
 import FetchLocation from './src/components/FetchLocation';
-
+import Geolocation from 'react-native-geolocation-service';
+import messaging from '@react-native-firebase/messaging';
 
 import { NativeModules } from 'react-native';
+
 const curbside = NativeModules.Curbside;
-const USAGE_TOKEN = '5456fd004166c9226ec3f2cb1ec567f0556af771305cc3e38fb0c3419833f48b'; // Piecompany
+// Piecompany
+const USAGE_TOKEN = '5456fd004166c9226ec3f2cb1ec567f0556af771305cc3e38fb0c3419833f48b';
 
-const instructions = Platform.select({
-  ios: 
-    'PieTracker React Native Arrive App,\n' + 
-    'Press Cmd+R to reload,\n' + 
-    'Cmd+D or shake for dev menu',
-  android:
-    'PieTracker React Native Arrive App,\n' +
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+export default class App extends Component<{}> {
 
-export async function requestLocationPermission() 
-{
-  try {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        'title': 'PieTracker React Native App',
-        'message': 'PieTracker React Native App access to your location '
-      }
-    )
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("You can use the location")
-    } else {
-      console.log("location permission denied")
-    }
-  } catch (err) {
-    console.warn(err)
-  }
-}
-
-export default class App extends Component {
   constructor(props) {
     super(props)
     curbside.createSessionWithUsageToken(USAGE_TOKEN)
     this.state = { 
       user_location: null, 
-      data_source: []
+      data_source: [],
+      full_name: 'John Smith',
+      email_address: 'john.smith@example.com',
+      sms_number: '8883308304',
+      car_make: 'Tesla',
+      car_model: 'Model S',
+      car_license_plate: 'NAP789'
     }
   }
-  startTrack = () => {
-    if(this.state.tracking_identifier && this.state.site_id) {
-      this.setState({
-        track_token: Math.random().toString(36).substring(2, 15),
-        tracking_identifier: this.state.tracking_identifier,
-        disabled: !Boolean(this.state.disabled)
-      })
+
+  async componentDidMount() { 
+    this.checkNotificationPermission();  
+    this.hasLocationPermission();
+  }
+
+  hasLocationPermissionIOS = async () => {
+    const openSetting = () => {
+      Linking.openSettings().catch(() => {
+        Alert.alert('Unable to open settings');
+      });
+    };
+    const status = await Geolocation.requestAuthorization('whenInUse');
+
+    if (status === 'granted') {
+      return true;
+    }
+
+    if (status === 'denied') {
+      Alert.alert('Location permission denied');
+    }
+
+    if (status === 'disabled') {
+      Alert.alert(
+        `Turn on Location Services to allow App to determine your location.`,
+        '',
+        [
+          { text: 'Go to Settings', onPress: openSetting },
+          { text: "Don't Use Location", onPress: () => {} },
+        ],
+      );
+    }
+
+    return false;
+  };
+
+  hasLocationPermission = async () => {
+    if (Platform.OS === 'ios') {
+      const hasPermission = await this.hasLocationPermissionIOS();
+      return hasPermission;
+    }
+
+    if (Platform.OS === 'android' && Platform.Version < 23) {
+      return true;
+    }
+
+    const hasPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+
+    if (hasPermission) {
+      return true;
+    }
+
+    const status = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    );
+
+    if (status === PermissionsAndroid.RESULTS.GRANTED) {
+      return true;
+    }
+
+    if (status === PermissionsAndroid.RESULTS.DENIED) {
+      ToastAndroid.show(
+        'Location permission denied by user.',
+        ToastAndroid.LONG,
+      );
+    } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+      ToastAndroid.show(
+        'Location permission revoked by user.',
+        ToastAndroid.LONG,
+      );
+    }
+
+    return false;
+  };
+
+  //Check whether Push Notifications are enabled or not
+  async checkNotificationPermission() {
+    const enabled = await messaging().hasPermission()
+    if (enabled) {
+      this.getToken()
     } else {
-      alert("Tracking Identifier, \n" + "Site ID are required to start a trip.")
+      this.requestNotificationPermission()
     }
   }
-  async componentWillMount() {
-    if(Platform.OS === 'android') {
-      await requestLocationPermission()
+
+  //Get Device Registration Token
+  async getToken() {
+    const fcmToken = await messaging().getToken()
+    if (fcmToken) {
+      console.log('fcmToken:', fcmToken)
     }
   }
-  stopTrack = () => {
-    if(this.state.tracking_identifier && this.state.site_id && this.state.track_token) {
-        this.setState({
-          disabled: false
-        })
-        curbside.completeTripToSiteWithIdentifier(this.state.site_id,this.state.track_token)
-    } else {
-      alert("You need to Start Trip before calling Stop Trip")
+
+  //Request for Push Notification
+  async requestNotificationPermission() {
+    try {
+      await messaging().requestPermission()
+      // If user allow Push Notification
+      this.getToken()
+    } catch (error) {
+      // If user do not allow Push Notification
+      console.log('Rejected')
     }
-    
   }
-  cancelTrack = () => {
-    if(this.state.tracking_identifier && this.state.site_id && this.state.track_token) {
-        this.setState({
-          disabled: false
-        })
-        curbside.cancelTripToSiteWithIdentifier(this.state.site_id,this.state.track_token)
-    } else {
-      alert("You need to Start Trip before calling Cancel Trip")
-    }
-    
-  }
+
   getSiteLocationHandler = () => {
-    navigator.geolocation.getCurrentPosition(
+    Geolocation.getCurrentPosition(
       position => {
         this.setState({
           user_location: {
@@ -126,13 +200,47 @@ export default class App extends Component {
     )
   }
 
+  startTrack = () => {
+    if(this.state.tracking_identifier && this.state.site_id) {
+      this.setState({
+        track_token: Math.random().toString(36).substring(2, 15),
+        tracking_identifier: this.state.tracking_identifier,
+        disabled: !Boolean(this.state.disabled)
+      })
+    } else {
+      alert("Tracking Identifier, \n" + "Site ID are required to start a trip.")
+    }
+  }
+
+  stopTrack = () => {
+    if(this.state.tracking_identifier && this.state.site_id && this.state.track_token) {
+        this.setState({
+          disabled: false
+        })
+        curbside.completeTripToSiteWithIdentifier(this.state.site_id,this.state.track_token)
+    } else {
+      alert("You need to Start Trip before calling Stop Trip")
+    }
+  }
+
+  cancelTrack = () => {
+    if(this.state.tracking_identifier && this.state.site_id && this.state.track_token) {
+        this.setState({
+          disabled: false
+        })
+        curbside.cancelTripToSiteWithIdentifier(this.state.site_id,this.state.track_token)
+    } else {
+      alert("You need to Start Trip before calling Cancel Trip")
+    }
+  }
+
   render() {
-    
+
     if(this.state.track_token && this.state.disabled === true && this.state.tracking_identifier) {
       curbside.setTrackingIdentifier(this.state.tracking_identifier)
-      curbside.startTripToSiteWithIdentifier(this.state.site_id,this.state.track_token)
+      curbside.setUserInfo(this.state.full_name,this.state.email_address,this.state.sms_number,this.state.car_make,this.state.car_model,this.state.car_license_plate)
+      curbside.startTripToSiteWithIdentifierWithTripType(this.state.site_id,this.state.track_token,'curbside')
     }
-
     return (
       <SafeAreaView style={styles.container}>
         <FetchLocation onGetLocation={this.getSiteLocationHandler} />
@@ -177,6 +285,48 @@ export default class App extends Component {
             value={this.state.tracking_identifier}
             autoCapitalize="none"
         />
+        <TextInput style={styles.Input} onChangeText={full_name => {
+              this.setState({ full_name });
+            }}
+            placeholder="Full Name"
+            value={this.state.full_name}
+            autoCapitalize="none"
+        />
+        <TextInput style={styles.Input} onChangeText={email_address => {
+              this.setState({ email_address });
+            }}
+            placeholder="Email Address"
+            value={this.state.email_address}
+            autoCapitalize="none"
+        />
+        <TextInput style={styles.Input} onChangeText={sms_number => {
+              this.setState({ sms_number });
+            }}
+            placeholder="Mobile Number"
+            value={this.state.sms_number}
+            autoCapitalize="none"
+        />
+        <TextInput style={styles.Input} onChangeText={car_make => {
+              this.setState({ car_make });
+            }}
+            placeholder="Car Make"
+            value={this.state.car_make}
+            autoCapitalize="none"
+        />
+        <TextInput style={styles.Input} onChangeText={car_model => {
+              this.setState({ car_model });
+            }}
+            placeholder="Car Model"
+            value={this.state.car_model}
+            autoCapitalize="none"
+        />
+        <TextInput style={styles.Input} onChangeText={car_license_plate => {
+              this.setState({ car_license_plate });
+            }}
+            placeholder="Car License Plate"
+            value={this.state.car_license_plate}
+            autoCapitalize="none"
+        />
         <Button text ="Start Trip" size="small" onPress = {this.startTrack} disabled = {this.state.disabled}/>
         <Button text ="Stop Trip" size="small" onPress = {this.stopTrack}/>
         <Button text ="Cancel Trip" size="small" onPress = {this.cancelTrack}/>
@@ -189,7 +339,6 @@ export default class App extends Component {
         <Text style ={[styles.siteIdText]}> { "Site ID : "}
         {this.state.site_id !== 0 ? this.state.site_id: null}
         </Text>
-        <Text style={styles.instructions}>{instructions}</Text>
       </SafeAreaView>
     );
   }

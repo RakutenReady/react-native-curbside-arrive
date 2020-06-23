@@ -2,12 +2,21 @@
 
 Example project demonstrating the functionality of the `react-native-curbside-arrive` library.
 
+Please note that this project uses `package.json` from the parent folder to simplify developing the library while testing it on this example project. If you use `react-native-curbside-arrive` in your own project, please follow instructions in the main [README](../README.md), and understand that the project structure will be slightly different than in this example project.
+
+Example project uses `react-native-geolocation-service` library is drop-in replacement for the React Native's Geolocation API, the usage is pretty straight forward, with some extra error cases to handle.
+
+One thing to note, for android this library assumes that location permission is already granted by the user, so you have to use `PermissionsAndroid` to request for permission before making the location request.
+
+Also includes sample [Firebase](https://rnfirebase.io/) messaging service integration.   
+
+
 
 #### Starting the simulator
 
 iOS
 
-- `cd exampleArriveApp`
+- `cd exampleArriveApp && pod install`
 - `open exampleArriveApp/ios/exampleArriveApp.xcworkspace` and Run from Xcode
                        ```
                        or
@@ -17,14 +26,13 @@ iOS
 - `react-native run-ios`
 
 
-![screen shot 2019-01-15 at 4 14 23 pm](https://user-images.githubusercontent.com/20405204/51218339-cd713480-18e0-11e9-8bbf-7d59150ecf08.png)
-
 #### Starting the Emulator
 
 Android
 
+- in Android Studio open `exampleArriveApp/android/` folder and run from there
+                       ```
+                       or
+                       ```
 - `cd exampleArriveApp`
 - `react-native run-android`
-
-![screen shot 2019-01-16 at 2 57 41 pm](https://user-images.githubusercontent.com/20405204/51284069-1ab3db80-199f-11e9-970d-d165ab370f26.png)
-

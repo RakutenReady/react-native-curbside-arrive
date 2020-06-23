@@ -1,6 +1,5 @@
-
 import { NativeModules } from 'react-native';
 
-const { Curbside } = NativeModules;
+const { CurbsideArrive } = NativeModules;
 
-export default Curbside;
+export default CurbsideArrive;

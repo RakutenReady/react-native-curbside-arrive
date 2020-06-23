@@ -1,19 +1,48 @@
 {
   "name": "react-native-curbside-arrive",
-  "version": "1.0.0",
-  "description": "React Native wrapper for the Curbside SDK for iOS and Android",
+  "title": "React Native Curbside Arrive",
+  "version": "3.3.0",
+  "description": "This library wraps the native Curbside Arrive SDK for iOS and Android, providing a unified JavaScript interface",
   "main": "index.js",
-  "private": true,
+  "files": [
+    "README.md",
+    "android",
+    "index.js",
+    "ios",
+    "LICENSE",
+    "react-native-curbside-arrive.podspec"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+     "start": "react-native start"
+  },
+  "homepage": "https://github.com/RakutenReady/react-native-curbside-arrive",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RakutenReady/react-native-curbside-arrive.git"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "ios",
+    "android",
+    "curbside",
+    "pickup",
+    "takeout",
+    "arrive",
+    "curbside-arrive"
   ],
-  "author": "Curbside",
+  "author": "Amit Mathur <reactnative@curbside.com>",
   "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.62.2"
+  },
+  "devDependencies": {
+    "react": "16.11.0",
+    "react-native": "0.62.2"
+  },
   "dependencies": {
-    "react": "^16.6.3",
-    "react-native": "^0.57.8"
+    "core-js": "^3.6.5"
   }
 }
