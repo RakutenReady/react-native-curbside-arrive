@@ -13,7 +13,7 @@
     "react-native-curbside-arrive.podspec"
   ],
   "scripts": {
-     "start": "react-native start"
+    "start": "react-native start"
   },
   "homepage": "https://github.com/RakutenReady/react-native-curbside-arrive",
   "repository": {
@@ -43,6 +43,7 @@
     "react-native": "0.62.2"
   },
   "dependencies": {
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "logkitty": "^0.7.1"
   }
 }
