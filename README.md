@@ -54,6 +54,7 @@ From React-Native 0.60.0 linking packages using react-native link has become red
 
 <details>
   <summary>Linker for React Native 0.59 or below</summary>
+	
 ```
 $ react-native link react-native-curbside-arrive
 ```
@@ -61,6 +62,7 @@ $ react-native link react-native-curbside-arrive
 
 <details>
   <summary>iOS (CocoaPods) for React Native 0.59 or below</summary>
+	
 Install [CocoaPods](https://cocoapods.org/) and set up your Podfile like it is described in the [react-native documentation](https://facebook.github.io/react-native/docs/integration-with-existing-apps#configuring-cocoapods-dependencies).
 
 In your `ios/Podfile`, add these snippets:
@@ -73,6 +75,7 @@ Finally, run `pod install`.
 
 <details>
   <summary>iOS (Manually for React Native 0.59 or below)</summary>
+	
   Follow [Manual linking](https://reactnative.dev/docs/linking-libraries-ios#manual-linking) documentation.
 
 - In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
@@ -87,8 +90,10 @@ Finally, run `pod install`.
 
 <details>
   <summary>Android for React Native 0.59 or below</summary>
+	
 For React-Native 0.60 or higher, no manual linking is needed.
 You can override following gradle properties from your root build.gradle file.
+
 ```gradle
      ext {
         buildToolsVersion = "28.0.3"
@@ -112,6 +117,7 @@ You can override following gradle properties from your root build.gradle file.
    ```gradle
    include ':react-native-curbside-arrive'
    project(':react-native-curbside-arrive').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-curbside-arrive/android')
+   
    ```
 
 3. Insert the following lines inside the `dependencies` block in `android/app/build.gradle`:
@@ -120,6 +126,7 @@ You can override following gradle properties from your root build.gradle file.
    dependencies {
      implementation project(':react-native-curbside-arrive')
    }
+   
    ```
 
 4. Insert the following lines above the dependencies block `android/app/build.gradle`:
@@ -141,8 +148,7 @@ You can override following gradle properties from your root build.gradle file.
 5. Add entry for Google Services plugin at the end of `android/app/build.gradle`:
 
     ```gradle
-apply plugin: 'com.google.gms.google-services' 
-
+	apply plugin: 'com.google.gms.google-services' 
     ```
 6. Curbside Android SDK needs `google-services.json` for the FCM integration at compile time, please setup FCM like it is described in the [Android quick start guide](https://developer.rakutenready.com/en/docs/getting-started/quickstart-android-app/#step-3-add-fcm-in-your-app)
 
@@ -314,4 +320,4 @@ curbside.cancelTripToSiteWithIdentifier("SITE_ID","TRACK_TOKEN")
 ```
 
 ## License
-See the repo root directory for licensing information.
+See the repository root directory for licensing information.
