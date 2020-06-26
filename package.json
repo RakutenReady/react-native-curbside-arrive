@@ -1,7 +1,7 @@
 {
   "name": "react-native-curbside-arrive",
   "title": "React Native Curbside Arrive",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "This library wraps the native Curbside Arrive SDK for iOS and Android, providing a unified JavaScript interface",
   "main": "index.js",
   "files": [
