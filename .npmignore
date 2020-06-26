@@ -1,2 +1,5 @@
 exampleArriveApp/
 *.iml
+android/.idea/
+android/.gradle/
+android/build/
