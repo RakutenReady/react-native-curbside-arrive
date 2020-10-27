@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.dependency "React"
 
   s.subspec 'Default' do |ss|
-    ss.dependency 'Curbside', '<= 3.31'
+    ss.dependency 'Curbside', '<= 3.5.1'
   end
   
 end

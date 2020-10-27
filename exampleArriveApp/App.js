@@ -41,8 +41,8 @@ import messaging from '@react-native-firebase/messaging';
 import { NativeModules } from 'react-native';
 
 const curbside = NativeModules.Curbside;
-// Piecompany
-const USAGE_TOKEN = '5456fd004166c9226ec3f2cb1ec567f0556af771305cc3e38fb0c3419833f48b';
+// Rakuten Ready Demo Token
+const USAGE_TOKEN = 'dfbe9fb7ad7c659ebd256626a325daca7c6045c8cd3d8d10fcc644b511d82d63';
 
 export default class App extends Component<{}> {
 

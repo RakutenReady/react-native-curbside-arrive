@@ -76,7 +76,7 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'com.curbside:sdk:3.3.0'
+    implementation 'com.curbside:sdk:3.4'
 }
 
 def configureReactNativePom(def pom) {
@@ -100,7 +100,6 @@ def configureReactNativePom(def pom) {
 
         developers {
             developer {
-                id packageJson.author.username
                 name packageJson.author.name
             }
         }
