@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-firebase/app": "^7.2.1",
     "@react-native-firebase/messaging": "^7.1.5",
+    "node-fetch": "^2.6.1",
     "core-js": "^3",
     "react": "16.11.0",
     "react-native": "0.62.2",

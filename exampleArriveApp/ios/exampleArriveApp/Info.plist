@@ -38,11 +38,11 @@
 		</dict>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>To get accurate GPS locations</string>
+	<string>The app uses your location to help the store prepare for your arrival when you have an open order.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>To get accurate GPS locations</string>
+	<string>The app uses your location to help the store prepare for your arrival when you have an open order.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To get accurate GPS locations</string>
+	<string>The app uses your location to help the store prepare for your arrival when you have an open order.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

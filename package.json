@@ -1,7 +1,7 @@
 {
   "name": "react-native-curbside-arrive",
   "title": "React Native Curbside Arrive",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "This library wraps the native Curbside Arrive SDK for iOS and Android, providing a unified JavaScript interface",
   "main": "index.js",
   "files": [
@@ -30,7 +30,11 @@
     "arrive",
     "curbside-arrive"
   ],
-  "author": "Amit Mathur <reactnative@curbside.com>",
+  "author": {
+    "name": "Amit Mathur",
+    "email": "reactnative@curbside.com",
+    "url": "https://rakutenready.com/"
+  },
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
@@ -44,6 +48,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "logkitty": "^0.7.1"
+    "logkitty": "^0.7.1",
+    "node-fetch": "^2.6.1"
   }
 }

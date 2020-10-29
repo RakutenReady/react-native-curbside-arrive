@@ -36,3 +36,21 @@ Android
                        ```
 - `cd exampleArriveApp`
 - `react-native run-android`
+
+#### FAQ
+<details>
+
+<summary>Android :java.lang.NoClassDefFoundError: Failed resolution of: Lcom/google/android/gms/internal/zzbgl;</summary>	
+
+Check if `play-services-analytics` dependency is added in `build.gradle` file as shown below as example :
+
+```xml
+
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
+```
+</details>    
